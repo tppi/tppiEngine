@@ -1,0 +1,52 @@
+dong@ubuntu:~/zhoudd$ mkdir helloword
+dong@ubuntu:~/zhoudd$ cd helloword/
+dong@ubuntu:~/zhoudd/helloword$ vi helloworld.c
+```
+#include <stdio.h>
+int main(int argc, char** argv){
+     printf("Hello, World!\n");
+     return 0;
+}
+```
+dong@ubuntu:~/zhoudd/helloword$ ls
+helloworld.c
+dong@ubuntu:~/zhoudd/helloword$ chmod 755 helloworld.c 
+dong@ubuntu:~/zhoudd/helloword$ autoscan
+dong@ubuntu:~/zhoudd/helloword$ ls
+autoscan.log  configure.scan  helloworld.c
+dong@ubuntu:~/zhoudd/helloword$ cp configure.scan configure.ac
+dong@ubuntu:~/zhoudd/helloword$ vi configure.ac
+```
+AC_INIT(helloworld.c)
+AM_INIT_AUTOMAKE(helloworld, 1.0)
+AC_PROG_CC
+AC_OUTPUT(Makefile)
+```
+dong@ubuntu:~/zhoudd/helloword$ aclocal
+dong@ubuntu:~/zhoudd/helloword$ ls
+aclocal.m4      autoscan.log  configure.scan
+autom4te.cache  configure.ac  helloworld.c
+dong@ubuntu:~/zhoudd/helloword$ autoconf
+dong@ubuntu:~/zhoudd/helloword$ ls
+autom4te.cache  configure     configure.scan
+autoscan.log    configure.ac  helloworld.c
+dong@ubuntu:~/zhoudd/helloword$ vi Makefile.am
+```
+bin_PROGRAMS=helloworld
+helloworld_SOURCES=helloworld.c
+```
+dong@ubuntu:~/zhoudd/helloword$ chmod 755 Makefile.am
+dong@ubuntu:~/zhoudd/helloword$ automake --add-missing
+dong@ubuntu:~/zhoudd/helloword$ ./configure
+dong@ubuntu:~/zhoudd/helloword$ make
+gcc -DPACKAGE_NAME=\"\" -DPACKAGE_TARNAME=\"\" -DPACKAGE_VERSION=\"\" -DPACKAGE_STRING=\"\" -DPACKAGE_BUGREPORT=\"\" -DPACKAGE_URL=\"\" -DPACKAGE=\"helloworld\" -DVERSION=\"1.0\" -I.     -g -O2 -MT helloworld.o -MD -MP -MF .deps/helloworld.Tpo -c -o helloworld.o helloworld.c
+mv -f .deps/helloworld.Tpo .deps/helloworld.Po
+gcc  -g -O2   -o helloworld helloworld.o  
+dong@ubuntu:~/zhoudd/helloword$ 
+dong@ubuntu:~/zhoudd/helloword$ ./helloworld
+Hello, Linux World!
+dong@ubuntu:~/zhoudd/helloword$
+
+reference:
+https://www.laruence.com/2009/11/18/1154.html
+http://www.idryman.org/blog/2016/03/10/autoconf-tutorial-1/

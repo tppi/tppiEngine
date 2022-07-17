@@ -1,0 +1,86 @@
+##### End of variables to change
+
+DEVICE_APPS =  tppiH264VideoStreamer$(EXE) tppiByteStreamMemoryBufferSource$(EXE) tppiOnDemandRTSPServer$(EXE) tppiEngineDeviceMain$(EXE) 
+
+PLATFORM_APPS = tppiEnginePlatformMain$(EXE) 
+
+ALL = $(DEVICE_APPS) $(PLATFORM_APPS)
+all: $(ALL)
+
+.$(C).$(OBJ):
+	$(C_COMPILER) -c $(C_FLAGS) $<
+.$(CPP).$(OBJ):
+	$(CPLUSPLUS_COMPILER) -c $(CPLUSPLUS_FLAGS) $<
+
+
+tppiH264VideoStreamer_OBJS = tppiH264VideoStreamer.$(OBJ) tppiDeviceH264Source.$(OBJ) tppiByteStreamH264Source.$(OBJ) tppiAnnounceURL.$(OBJ) tppiUtil.$(OBJ) tppiRingBuffer_ts.$(OBJ)
+
+tppiByteStreamMemoryBufferSource_OBJS = tppiByteStreamMemoryBufferSource.$(OBJ) tppiDeviceH264Source.$(OBJ) tppiByteStreamH264Source.$(OBJ) tppiAnnounceURL.$(OBJ) tppiUtil.$(OBJ) tppiRingBuffer_ts.$(OBJ)
+
+tppiOnDemandRTSPServer_OBJS = tppiOnDemandRTSPServer.$(OBJ) tppiByteStreamH264Source.$(OBJ) tppiByteStreamAACSource.$(OBJ) tppiByteStreamH264VideoServerMediaSubsession.$(OBJ) tppiByteStreamADTSAudioServerMediaSubsession.$(OBJ) tppiAnnounceURL.$(OBJ) tppiUtil.$(OBJ) tppiRingBuffer_ts.$(OBJ)
+
+tppiEngineDeviceMain_OBJS = tppiEngineDeviceMain.$(OBJ) tppiByteStreamH264Source.$(OBJ) tppiByteStreamAACSource.$(OBJ) tppiByteStreamH264VideoServerMediaSubsession.$(OBJ) tppiByteStreamADTSAudioServerMediaSubsession.$(OBJ) tppiAnnounceURL.$(OBJ) tppiUtil.$(OBJ) tppiRingBuffer_ts.$(OBJ)
+
+tppiEnginePlatformMain_OBJS = tppiEnginePlatformMain.$(OBJ) tppiDeviceH264Source.$(OBJ) tppiDeviceAACSource.$(OBJ) tppiByteStreamH264Source.$(OBJ) tppiByteStreamAACSource.$(OBJ) tppiH264VideoServerMediaSubsession.$(OBJ) tppiADTSAudioServerMediaSubsession.$(OBJ) tppiByteStreamH264VideoServerMediaSubsession.$(OBJ) tppiByteStreamADTSAudioServerMediaSubsession.$(OBJ) tppiAnnounceURL.$(OBJ) tppiUtil.$(OBJ) tppiRingBuffer_ts.$(OBJ)
+
+
+tppiAnnounceURL.$(CPP): 			   tppiAnnounceURL.hh
+tppiRingBuffer_ts.$(CPP):        tppiRingBuffer.hh
+tppiUtil.$(CPP):                 tppiUtil.hh
+
+tppiADTSAudioServerMediaSubsession.$(CPP): tppiADTSAudioServerMediaSubsession.hh tppiADTSAudioServerMediaSubsession.hh tppiDeviceAACSource.hh
+tppiDeviceAACSource.$(CPP): tppiDeviceAACSource.hh tppiConfig.hh tppiUtil.hh
+
+tppiH264VideoServerMediaSubsession.$(CPP): tppiH264VideoServerMediaSubsession.hh tppiDeviceH264Source.hh
+tppiDeviceH264Source.$(CPP): tppiDeviceH264Source.hh tppiConfig.hh tppiUtil.hh
+
+tppiByteStreamADTSAudioServerMediaSubsession.$(CPP): tppiByteStreamADTSAudioServerMediaSubsession.hh tppiByteStreamAACSource.hh
+tppiByteStreamAACSource.$(CPP): tppiByteStreamAACSource.hh tppiConfig.hh tppiUtil.hh
+
+tppiByteStreamH264VideoServerMediaSubsession.$(CPP): tppiByteStreamH264VideoServerMediaSubsession.hh tppiByteStreamH264Source.hh
+tppiByteStreamH264Source.$(CPP): tppiByteStreamH264Source.hh tppiConfig.hh tppiUtil.hh
+
+tppiH264VideoStreamer.$(CPP): tppiDeviceH264Source.hh tppiByteStreamH264Source.hh tppiAnnounceURL.hh tppiConfig.hh tppiUtil.hh
+
+tppiByteStreamMemoryBufferSource.$(CPP): tppiDeviceH264Source.hh tppiByteStreamH264Source.hh tppiAnnounceURL.hh tppiConfig.hh tppiUtil.hh
+
+tppiOnDemandRTSPServer.$(CPP): tppiByteStreamH264VideoServerMediaSubsession.hh tppiByteStreamADTSAudioServerMediaSubsession.hh tppiByteStreamH264Source.hh tppiByteStreamAACSource.hh tppiAnnounceURL.hh tppiConfig.hh tppiUtil.hh
+
+tppiEngineDeviceMain.$(CPP): tppiByteStreamH264VideoServerMediaSubsession.hh tppiByteStreamADTSAudioServerMediaSubsession.hh tppiByteStreamH264Source.hh tppiByteStreamAACSource.hh tppiAnnounceURL.hh tppiConfig.hh tppiUtil.hh
+
+tppiEnginePlatformMain.$(CPP): tppiH264VideoServerMediaSubsession.hh tppiADTSAudioServerMediaSubsession.hh tppiAnnounceURL.hh tppiDeviceH264Source.hh tppiDeviceAACSource.hh tppiConfig.hh
+
+
+USAGE_ENVIRONMENT_DIR = ../live/UsageEnvironment
+USAGE_ENVIRONMENT_LIB = $(USAGE_ENVIRONMENT_DIR)/libUsageEnvironment.$(libUsageEnvironment_LIB_SUFFIX)
+BASIC_USAGE_ENVIRONMENT_DIR = ../live/BasicUsageEnvironment
+BASIC_USAGE_ENVIRONMENT_LIB = $(BASIC_USAGE_ENVIRONMENT_DIR)/libBasicUsageEnvironment.$(libBasicUsageEnvironment_LIB_SUFFIX)
+LIVEMEDIA_DIR = ../live/liveMedia
+LIVEMEDIA_LIB = $(LIVEMEDIA_DIR)/libliveMedia.$(libliveMedia_LIB_SUFFIX)
+GROUPSOCK_DIR = ../live/groupsock
+GROUPSOCK_LIB = $(GROUPSOCK_DIR)/libgroupsock.$(libgroupsock_LIB_SUFFIX)
+LOCAL_LIBS =	$(LIVEMEDIA_LIB) $(GROUPSOCK_LIB) \
+		$(BASIC_USAGE_ENVIRONMENT_LIB) $(USAGE_ENVIRONMENT_LIB)
+TPPI_LIBS = -lpthread
+LIBS =			$(LOCAL_LIBS) $(LIBS_FOR_CONSOLE_APPLICATION) $(TPPI_LIBS)
+
+tppiH264VideoStreamer$(EXE):	$(tppiH264VideoStreamer_OBJS) $(LOCAL_LIBS)
+	$(LINK)$@ $(CONSOLE_LINK_OPTS) $(tppiH264VideoStreamer_OBJS) $(LIBS)
+tppiByteStreamMemoryBufferSource$(EXE):	$(tppiByteStreamMemoryBufferSource_OBJS) $(LOCAL_LIBS)
+	$(LINK)$@ $(CONSOLE_LINK_OPTS) $(tppiByteStreamMemoryBufferSource_OBJS) $(LIBS)
+tppiOnDemandRTSPServer$(EXE):	$(tppiOnDemandRTSPServer_OBJS) $(LOCAL_LIBS)
+	$(LINK)$@ $(CONSOLE_LINK_OPTS) $(tppiOnDemandRTSPServer_OBJS) $(LIBS)
+tppiEngineDeviceMain$(EXE):	$(tppiEngineDeviceMain_OBJS) $(LOCAL_LIBS)
+	$(LINK)$@ $(CONSOLE_LINK_OPTS) $(tppiEngineDeviceMain_OBJS) $(LIBS)
+tppiEnginePlatformMain$(EXE):      $(tppiEnginePlatformMain_OBJS) $(LOCAL_LIBS)
+	$(LINK)$@ $(CONSOLE_LINK_OPTS) $(tppiEnginePlatformMain_OBJS) $(LIBS)
+
+
+clean:
+	-rm -rf *.$(OBJ) $(ALL) core *.core *~ include/*~
+
+install: $(ALL)
+	  install -d $(DESTDIR)$(PREFIX)/bin
+	  install -m 755 $(ALL) $(DESTDIR)$(PREFIX)/bin
+
+##### Any additional, platform-specific rules come here:
